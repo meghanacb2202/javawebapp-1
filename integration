@@ -11,7 +11,6 @@ pipeline{
                 git branch: 'main', credentialsId: 'git1', url: 'https://github.com/meghanacb2202/javawebapp-1.git'
             }
          }
-	 }
        stage('Build'){
             steps{
                 sh 'mvn clean package'
@@ -44,4 +43,5 @@ pipeline{
 		
        
     }
+}
 }
