@@ -10,7 +10,8 @@ pipeline{
             steps{
                 git branch: 'main', credentialsId: 'git1', url: 'https://github.com/meghanacb2202/javawebapp-1.git'
             }
-         }        
+         }
+	 }
        stage('Build'){
             steps{
                 sh 'mvn clean package'
@@ -28,7 +29,7 @@ pipeline{
            	nexusArtifactUploader 
 			artifacts: [
 			[artifactId: 'SimpleWebApplication', 
-			classifier: '', 
+			classifier: ', 
 			file: '/target/SimpleWebApplication.war', 
 			type: 'war']], 
 			credentialsId: 'nexuslogin',
