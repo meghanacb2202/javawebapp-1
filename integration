@@ -29,7 +29,7 @@ pipeline{
            	nexusArtifactUploader 
 			artifacts: [
 			[artifactId: 'SimpleWebApplication', 
-			classifier: ', 
+			classifier:''', 
 			file: '/target/SimpleWebApplication.war', 
 			type: 'war']], 
 			credentialsId: 'nexuslogin',
