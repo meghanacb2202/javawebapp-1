@@ -1,0 +1,46 @@
+pipeline{
+    agent {
+	label 'maven'
+	}
+    environment {
+        PATH = "$PATH:/usr/share/apache-maven/bin"
+    }
+    stages{
+       stage('GetCode'){
+            steps{
+                git branch: 'main', credentialsId: 'git1', url: 'https://github.com/meghanacb2202/javawebapp-1.git'
+            }
+         }        
+       stage('Build'){
+            steps{
+                sh 'mvn clean package'
+            }
+         }
+        stage('SonarQube analysis') {
+        steps{
+        withSonarQubeEnv('qube') { 
+        sh "mvn sonar:sonar"
+    }
+        }
+        }
+		stage('Upload to Nexus'){
+            steps{
+           	nexusArtifactUploader 
+			artifacts: [
+			[artifactId: 'SimpleWebApplication', 
+			classifier: '', 
+			file: '/target/SimpleWebApplication.war', 
+			type: 'war']], 
+			credentialsId: 'nexuslogin',
+			groupId: 'com.maven.bt', 
+			nexusUrl: '13.127.114.78:8081', 
+			nexusVersion: 'nexus3', 
+			protocol: 'http', 
+			repository: 'meghana', 
+			version: '9.1.14'
+            }
+         }
+		
+       
+    }
+}
